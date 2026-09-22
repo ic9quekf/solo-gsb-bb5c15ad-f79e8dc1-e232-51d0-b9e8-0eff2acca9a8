@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>维护窗口排程</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header>
+    <h1>🛠 维护窗口排程</h1>
+    <div class="header-actions">
+      <input id="scenarioName" placeholder="场景名称" title="场景名称">
+      <button id="btnSave" title="保存当前场景到数据库">保存场景</button>
+      <select id="savedList"><option value="">已保存场景…</option></select>
+      <button id="btnLoad">恢复</button>
+      <button id="btnDelete" class="danger">删除</button>
+      <button id="btnExport">导出 JSON</button>
+      <label class="import-label" title="从 JSON 文件导入场景">
+        导入 JSON<input type="file" id="fileImport" accept=".json,application/json">
+      </label>
+    </div>
+  </header>
+
+  <main>
+    <aside id="editor">
+      <section class="card">
+        <h2>排程日期范围</h2>
+        <label class="field">开始 <input type="datetime-local" id="horizonStart"></label>
+        <label class="field">结束 <input type="datetime-local" id="horizonEnd"></label>
+      </section>
+
+      <section class="card">
+        <h2>维护任务 <button id="btnAddTask" class="mini">+ 添加任务</button></h2>
+        <p class="hint">资源同名即互斥;依赖为多选(Ctrl/⌘ 点击)。</p>
+        <div id="taskList"></div>
+      </section>
+
+      <section class="card">
+        <h2>不可维护时段 <button id="btnAddBlackout" class="mini">+ 添加时段</button></h2>
+        <div id="blackoutList"></div>
+      </section>
+    </aside>
+
+    <section id="viewer">
+      <div id="conflicts" class="card"></div>
+      <div class="card gantt-card">
+        <h2>甘特图 <span class="hint">拖动任务条调整窗口,松开即重算;黄色为已固定任务</span></h2>
+        <div id="gantt"></div>
+        <div id="ganttEmpty">暂无任务,请在左侧添加维护任务</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
